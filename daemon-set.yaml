@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset
+  namespace: default
+  labels:
+    name: monitoring
+    app: daemonset
+spec:
+  selector:
+    matchLabels:
+      name: monitoring
+  template:
+    metadata:
+      labels:
+        name: monitoring
+    spec:
+      containers:
+      - name: fluentd-elasticsearch
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: production-pod
+  labels:
+    owner: techlanders
+    env: dev
+    a: b
+spec:
+  containers:
+    - name: container1
+      image: httpd:2.4
+  nodeSelector:
+    env: prod
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: development-pod
+  labels:
+    owner: techlanders
+    env: dev
+    a: b
+spec:
+  containers:
+    - name: container1
+      image: httpd:2.4
+  nodeSelector:
+    env: dev
