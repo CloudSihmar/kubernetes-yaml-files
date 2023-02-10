@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  Age: "20"
+  Name: Sam
+kind: ConfigMap
+metadata:
+  name: properties
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-demo-pod
+spec:
+  containers:
+  - name: container1
+    image: nginx
+    env:
+    - name: PLAYER_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: properties # The ConfigMap this value comes from.
+          key: Name # The key to fetch.
+    - name: PLAYER_AGE
+      valueFrom:
+        configMapKeyRef:
+          name: properties
+          key: Age

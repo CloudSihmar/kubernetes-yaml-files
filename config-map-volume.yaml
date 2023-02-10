@@ -1,13 +1,36 @@
 apiVersion: v1
+data:
+  prod.html: |
+    hello from the production department
 kind: ConfigMap
 metadata:
-  name: game-demo
-data:
-  # property-like keys; each key maps to a simple value
-  player_initial_lives: "3"
-  ui_properties_file_name: "user-interface.properties"
+  creationTimestamp: null
+  name: prod
 
-  # file-like keys
-  game.properties: |
-    enemy.types=aliens,monsters
-    player.maximum-lives=5   
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prod-nginx
+  labels:
+    app: prod-nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: config-volume
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: config-volume
+    configMap:
+      name: prod
+      items:
+      - key: prod.html
+        path: index.html 
+
+
+
